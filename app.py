@@ -30,7 +30,7 @@ if st.button("Generate"):
             messages=[{
             "role": "system", "content": f"{prompt}. \n\nFields to Map Sheet: {df1}. Reco Database Sheet: {df2}. Draft Sheet: {df3}. Dataset: {dataset}\n\nAnswer:"
             }],
-            temperature=1,
+            temperature=0,
             # top_p=0,
             # frequency_penalty=0,
             # presence_penalty=0,
