@@ -19,7 +19,6 @@ df3 = pd.read_excel('Lyzr Reco - Sales DB.xlsx', sheet_name='Draft')
 dataset = pd.read_csv('Superstore.csv')
 # if file is not None:
 #     text = pd.read_csv(file)
-
 st.write("### Give instructions to the model:")
 prompt = st.text_area("_", label_visibility="hidden", height=200)
 
