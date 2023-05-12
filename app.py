@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 import pandas as pd
+from langchain.agents import create_csv_agent
+from langchain.chat_models import ChatOpenAI
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
@@ -23,14 +25,15 @@ prompt = st.text_area("_", label_visibility="hidden", height=200)
 
 if st.button("Generate"):
     with st.spinner("Generating..."):
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[{
-            "role": "system", "content": f"{prompt}. \n\nFields to Map Sheet: {df1}. Reco Database Sheet: {df2}. Draft Sheet: {df3}. Dataset: {dataset}\n\nAnswer:"
-            }],
-            temperature=0,
-            # top_p=0,
-            # frequency_penalty=0,
-            # presence_penalty=0,
-        )
-        st.write(response["choices"][0]["message"]["content"])
+        # response = openai.ChatCompletion.create(
+        #     model="gpt-4",
+        #     messages=[{
+        #     "role": "system", "content": f"{prompt}. \n\nFields to Map Sheet: {df1}. Reco Database Sheet: {df2}. Draft Sheet: {df3}. Dataset: {dataset}\n\nAnswer:"
+        #     }],
+        #     temperature=0,
+        #     # top_p=0,
+        #     # frequency_penalty=0,
+        #     # presence_penalty=0,
+        # )
+        response = create_csv_agent(ChatOpenAI(temperature=0), 'Superstore.csv', verbose=True)
+        st.write(response.run("What are the numerical columns here?"))
